@@ -6,7 +6,8 @@ import Link from 'next/link'
 import imageUrlBuilder from '@sanity/image-url'
 import { client } from '@/sanity/client'
 import SkillsSection from './SkillsSection'
-import ProjectDialog from './ProjectDialog'
+import dynamic from 'next/dynamic'
+const ProjectDialog = dynamic(() => import('./ProjectDialog'))
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 const builder = imageUrlBuilder(client)
