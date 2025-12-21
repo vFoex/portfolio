@@ -95,15 +95,19 @@ export default defineType({
       title: 'name',
       emoji: 'emoji',
       media: 'icon',
+      iconUrl: 'iconUrl',
       category: 'category',
       featured: 'featured',
     },
     prepare(selection) {
-      const { title, emoji, media, category, featured } = selection
+      const { title, emoji, media, iconUrl, category, featured } = selection
+      // Only use media if it's a Sanity image object, not a string path
+      const isValidMedia = media && typeof media === 'object' && media.asset
+      
       return {
         title: title,
         subtitle: `${category || 'No category'} ${featured ? '⭐' : ''}`,
-        media: media || (emoji ? undefined : media),
+        media: isValidMedia ? media : undefined,
       }
     },
   },
