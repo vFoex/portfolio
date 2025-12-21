@@ -6,6 +6,7 @@ import Link from 'next/link'
 import imageUrlBuilder from '@sanity/image-url'
 import { client } from '@/sanity/client'
 import SkillsSection from './SkillsSection'
+import ProjectDialog from './ProjectDialog'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 const builder = imageUrlBuilder(client)
@@ -49,6 +50,7 @@ interface ProjectsSectionProps {
 export default function ProjectsSection({ projects, skills }: ProjectsSectionProps) {
   const [selectedSkillId, setSelectedSkillId] = useState<string | null>(null)
   const [selectedProjectType, setSelectedProjectType] = useState<string | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   // Filtrer les projets
   let filteredProjects = projects
@@ -148,10 +150,12 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProjects.map((project) => (
-                <Link
+                <button
                   key={project._id}
-                  href={`/project/${project.slug.current}`}
-                  className="group glass-card rounded-3xl overflow-hidden hover:bg-white/5 transition-all"
+                  type="button"
+                  onClick={() => setSelectedProject(project)}
+                  className="group glass-card rounded-3xl overflow-hidden hover:bg-white/5 transition-all text-left"
+                  title={project.title}
                 >
                   {project.mainImage ? (
                     <div className="relative h-48 overflow-hidden">
@@ -177,16 +181,13 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
                       <span className="text-6xl">🚀</span>
                     </div>
                   )}
-                  
                   <div className="p-6">
                     <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">
                       {project.title}
                     </h3>
-                    
                     <p className="text-gray-400 mb-4 line-clamp-2 text-sm">
                       {project.description}
                     </p>
-                    
                     {project.skills && project.skills.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {project.skills.slice(0, 3).map((skill) => (
@@ -205,12 +206,13 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
                       </div>
                     )}
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           )}
         </div>
       </section>
+      <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>
-  )
-}
+    )
+  }
