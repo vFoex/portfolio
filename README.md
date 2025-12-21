@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+   # 🚀 Portfolio Valentin Foex
 
-## Getting Started
+Portfolio moderne centré sur les projets, construit avec Next.js et Sanity CMS.
 
-First, run the development server:
+## Démarrage Rapide
 
+### 1. Installer les dépendances
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Lancer le serveur
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Visitez http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Remplir vos projets
 
-## Learn More
+**Obtenir un token Sanity :**
+1. Allez sur https://www.sanity.io/manage
+2. Sélectionnez votre projet
+3. API → Tokens → Add API token
+4. Permission : **Editor**
+5. Copiez le token
 
-To learn more about Next.js, take a look at the following resources:
+**Ajouter le token dans `.env.local` :**
+```env
+SANITY_API_TOKEN="votre_token_ici"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Remplir les projets automatiquement :**
+```bash
+npm run seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Cela ajoutera automatiquement vos 5 projets du CV :
+- ✅ LaTomate Chrome Extension
+- ✅ Binance Trading Bot  
+- ✅ Queens Game Web App
+- ✅ Pokémon GO-Style Mobile Game
+- ✅ Recipe Recommendation Platform
 
-## Deploy on Vercel
+### 4. Gérer le contenu
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Allez sur http://localhost:3000/studio pour :
+- Ajouter des images à vos projets
+- Modifier les descriptions
+- Ajouter de nouveaux projets
+- Réorganiser l'ordre
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Fonctionnalités
+
+- 🎨 Design moderne minimaliste (fond noir)
+- 📱 Responsive design
+- 🖼️ Support d'images et galeries
+- 📝 Descriptions riches avec PortableText
+- 🔗 Liens GitHub et Live Demo
+- 🏷️ Tags de technologies
+- 📊 Statut des projets (In Progress / Completed)
+- ⭐ Projets featured
+
+## Structure
+
+```
+app/
+  page.tsx              # Page d'accueil avec liste des projets
+  project/[slug]/       # Page de détail de chaque projet
+  studio/               # Interface admin Sanity
+sanity/
+  schemas/project.ts    # Schéma des projets
+scripts/
+  seed-projects.ts      # Script pour remplir les données
+```
+
+## Déploiement
+
+Déployez sur Vercel en un clic :
+1. Push sur GitHub
+2. Import sur Vercel
+3. Ajoutez les variables d'environnement
+4. Deploy!
+

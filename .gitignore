@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Temporary files
+*.txt
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+
+# Setup scripts archive
+scripts/archive/
+
+# Documentation files (development only)
+*_SETUP.md
+*_PERMISSIONS.md
+GETTING_STARTED_*.md
+SKILLS_SYSTEM.md
