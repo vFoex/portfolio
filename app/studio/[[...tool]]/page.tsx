@@ -6,5 +6,5 @@ export const dynamic = 'force-dynamic'
 export { metadata, viewport } from 'next-sanity/studio'
 
 export default function StudioPage() {
-  return <NextStudio config={config} unstable_noStore />
+  return <NextStudio config={config} />
 }
