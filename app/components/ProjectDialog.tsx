@@ -49,7 +49,7 @@ export default function ProjectDialog({ project, onClose }: ProjectDialogProps) 
     <div
       className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md min-h-screen flex items-center justify-center p-4"
       onClick={onClose}
-      style={{ minHeight: '100vh', minHeight: '100dvh' }}
+      style={{ minHeight: '100dvh' }}
     >
       <div
         className="glass-card rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl max-h-[90vh] overflow-y-auto"

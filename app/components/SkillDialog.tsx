@@ -55,7 +55,7 @@ export default function SkillDialog({ skill, onClose }: SkillDialogProps) {
     <div 
       className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm min-h-screen flex items-center justify-center p-4"
       onClick={onClose}
-      style={{ minHeight: '100vh', minHeight: '100dvh' }}
+      style={{ minHeight: '100dvh' }}
     >
       <div 
         className="glass-card rounded-3xl p-8 max-w-md w-full relative shadow-2xl"
