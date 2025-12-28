@@ -53,15 +53,17 @@ export default function SkillDialog({ skill, onClose }: SkillDialogProps) {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm min-h-screen flex items-center justify-center p-4"
       onClick={onClose}
+      style={{ minHeight: '100vh', minHeight: '100dvh' }}
     >
       <div 
-        className="glass-card rounded-3xl p-8 max-w-md w-full relative overflow-hidden"
+        className="glass-card rounded-3xl p-8 max-w-md w-full relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'linear-gradient(to bottom right, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1)), rgba(255, 255, 255, 0.05)'
+        }}
       >
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10" />
         
         {/* Close button */}
         <button

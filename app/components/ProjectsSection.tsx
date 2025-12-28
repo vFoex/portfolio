@@ -52,6 +52,7 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
   const [selectedSkillId, setSelectedSkillId] = useState<string | null>(null)
   const [selectedProjectType, setSelectedProjectType] = useState<string | null>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [showAll, setShowAll] = useState(false)
 
   // Filtrer les projets
   let filteredProjects = projects
@@ -68,18 +69,30 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
     )
   }
 
+  // Afficher les projets : 3 au début, puis tous si showAll ou si des filtres sont actifs
+  const hasActiveFilters = selectedSkillId || selectedProjectType
+  const displayedProjects = (showAll || hasActiveFilters) ? filteredProjects : filteredProjects.slice(0, 3)
+
   return (
     <>
-      <SkillsSection skills={skills} />
-
       <section id="projects" className="px-6 py-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Featured Projects
-              </span>
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-4xl font-bold">
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  Featured Projects
+                </span>
+              </h2>
+              {filteredProjects.length > 3 && !hasActiveFilters && (
+                <button
+                  onClick={() => setShowAll(!showAll)}
+                  className="text-sm text-gray-400 hover:text-cyan-400 transition-colors"
+                >
+                  {showAll ? 'Show less' : `View all (${filteredProjects.length})`} →
+                </button>
+              )}
+            </div>
 
             {/* Filtres */}
             <div className="flex flex-wrap gap-4">
@@ -150,12 +163,12 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project) => (
+              {displayedProjects.map((project) => (
                 <button
                   key={project._id}
                   type="button"
                   onClick={() => setSelectedProject(project)}
-                  className="group glass-card rounded-3xl overflow-hidden hover:bg-white/5 transition-all text-left"
+                  className="group glass-card rounded-3xl overflow-hidden hover:bg-white/5 transition-all text-left cursor-pointer"
                   title={project.title}
                 >
                   {project.mainImage ? (
@@ -191,9 +204,9 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
                     </p>
                     {project.skills && project.skills.length > 0 && (
                       <div className="flex flex-wrap gap-2">
-                        {project.skills.slice(0, 3).map((skill) => (
+                        {project.skills.slice(0, 3).map((skill, i) => (
                           <span
-                            key={skill._id}
+                            key={`${skill._id}-${i}`}
                             className="text-xs px-3 py-1 bg-white/5 text-gray-300 rounded-full border border-white/10"
                           >
                             {skill.name}
@@ -213,7 +226,10 @@ export default function ProjectsSection({ projects, skills }: ProjectsSectionPro
           )}
         </div>
       </section>
+      
+      <SkillsSection skills={skills} />
+      
       <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
     </>
-    )
-  }
+  )
+}

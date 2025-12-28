@@ -47,48 +47,50 @@ export default function ProjectDialog({ project, onClose }: ProjectDialogProps) 
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md min-h-screen flex items-center justify-center p-4"
       onClick={onClose}
+      style={{ minHeight: '100vh', minHeight: '100dvh' }}
     >
       <div
-        className="glass-card rounded-3xl p-8 max-w-xl w-full relative overflow-hidden"
+        className="glass-card rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'linear-gradient(to bottom right, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1)), rgba(255, 255, 255, 0.05)'
+        }}
       >
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10" />
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full glass-card hover:bg-white/10 transition-all flex items-center justify-center z-10"
+          className="absolute top-6 right-6 w-10 h-10 rounded-full glass-card hover:bg-white/10 transition-all flex items-center justify-center z-10"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <div className="relative z-10">
+        <div className="relative">
           {/* Image */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-8 mt-8">
             {project.mainImage ? (
-              <div className="relative w-48 h-32">
+              <div className="relative w-full h-64">
                 <Image
-                  src={urlFor(project.mainImage).width(400).height(300).url()}
+                  src={urlFor(project.mainImage).width(800).height(500).url()}
                   alt={project.title}
                   fill
                   className="object-cover rounded-xl"
                 />
               </div>
             ) : (
-              <div className="w-48 h-32 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 flex items-center justify-center rounded-xl">
-                <span className="text-6xl">🚀</span>
+              <div className="w-full h-64 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 flex items-center justify-center rounded-xl">
+                <span className="text-8xl">🚀</span>
               </div>
             )}
           </div>
           {/* Title */}
-          <h2 className="text-3xl font-bold text-center mb-2">{project.title}</h2>
+          <h2 className="text-4xl font-bold text-center mb-4">{project.title}</h2>
           {/* Status & Type */}
-          <div className="flex justify-center gap-2 mb-4">
+          <div className="flex justify-center gap-3 mb-6">
             {project.status && (
-              <span className={`px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md ${
+              <span className={`px-4 py-2 rounded-full text-sm font-medium backdrop-blur-md ${
                 project.status === "completed"
                   ? "bg-green-500/20 text-green-300 border border-green-500/30"
                   : "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
@@ -97,22 +99,22 @@ export default function ProjectDialog({ project, onClose }: ProjectDialogProps) 
               </span>
             )}
             {project.projectType && (
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-gray-300 border border-white/10">
+              <span className="px-4 py-2 rounded-full text-sm font-medium bg-white/5 text-gray-300 border border-white/10">
                 {project.projectType.charAt(0).toUpperCase() + project.projectType.slice(1)}
               </span>
             )}
           </div>
           {/* Description */}
-          <p className="text-gray-300 text-center leading-relaxed mb-4">
+          <p className="text-gray-300 text-center leading-relaxed mb-6 text-lg">
             {project.description}
           </p>
           {/* Skills */}
           {project.skills && project.skills.length > 0 && (
-            <div className="flex flex-wrap gap-2 justify-center mb-4">
-              {project.skills.map((skill) => (
+            <div className="flex flex-wrap gap-3 justify-center mb-6">
+              {project.skills.map((skill, i) => (
                 <span
-                  key={skill._id}
-                  className="text-xs px-3 py-1 bg-white/5 text-gray-300 rounded-full border border-white/10"
+                  key={`${skill._id}-${i}`}
+                  className="text-sm px-4 py-2 bg-white/5 text-gray-300 rounded-full border border-white/10"
                 >
                   {skill.name}
                 </span>
@@ -120,13 +122,13 @@ export default function ProjectDialog({ project, onClose }: ProjectDialogProps) 
             </div>
           )}
           {/* Links */}
-          <div className="flex justify-center gap-4 mt-6">
+          <div className="flex justify-center gap-4 mt-8">
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 glass-card rounded-xl text-sm font-medium hover:bg-white/10 transition-all"
+                className="px-6 py-3 glass-card rounded-xl text-base font-medium hover:bg-white/10 transition-all"
               >
                 GitHub
               </a>
@@ -136,7 +138,7 @@ export default function ProjectDialog({ project, onClose }: ProjectDialogProps) 
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 glass-card rounded-xl text-sm font-medium hover:bg-white/10 transition-all"
+                className="px-6 py-3 glass-card rounded-xl text-base font-medium hover:bg-white/10 transition-all"
               >
                 Live Site
               </a>

@@ -1,5 +1,6 @@
 import { client } from '@/sanity/client'
 import ProjectsSection from './components/ProjectsSection'
+import Navbar from './components/Navbar'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 interface Project {
@@ -33,7 +34,7 @@ interface Skill {
 
 async function getProjects() {
   const projects = await client.fetch<Project[]>(
-    `*[_type == "project" && featured == true] | order(order asc, _createdAt desc) {
+    `*[_type == "project" && !(_id in path("drafts.**"))] | order(featured desc, order asc, _createdAt desc) {
       _id,
       title,
       slug,
@@ -56,7 +57,7 @@ async function getProjects() {
 
 async function getSkills() {
   const skills = await client.fetch<Skill[]>(
-    `*[_type == "skill"] | order(order asc, name asc) {
+    `*[_type == "skill" && !(_id in path("drafts.**"))] | order(order asc, name asc) {
       _id,
       name,
       slug,
@@ -87,25 +88,7 @@ export default async function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-slate-950/30 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            VF
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="#skills" className="text-sm hover:text-cyan-400 transition-colors">Skills</a>
-            <a href="#projects" className="text-sm hover:text-cyan-400 transition-colors">Projects</a>
-            <a href="#contact" className="text-sm hover:text-cyan-400 transition-colors">Contact</a>
-            <a 
-              href="/Resume_Valentin_Foex.pdf" 
-              download
-              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg text-sm font-medium hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
-            >
-              Download CV
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="relative z-10 pt-20">
         {/* Hero Section */}
